@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>الحجوزات — المنزل الراقي</title>
+  <style>
+    :root{
+      --beige:#f3eadf; --wood:#8b5e34; --wood-2:#a47148;
+      --dark-0:#0e0e0f; --dark-1:#191a1c; --dark-2:#24262a;
+      --accent:#c9a574; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.18);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:"Cairo",system-ui;background:var(--dark-0);color:#eee;}
+    a{color:inherit;text-decoration:none;}
+
+    /* ===== الشريط العلوي ===== */
+    header{
+      position:sticky;top:0;z-index:1000;
+      backdrop-filter:saturate(160%) blur(8px);
+      background:rgba(15,16,18,.85);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .topbar{
+      display:flex;align-items:center;justify-content:space-between;
+      padding:12px 24px;color:#fff;
+    }
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand .logo{
+      width:44px;height:44px;border-radius:50%;
+      background:url("../media/mm.jpeg") center/cover no-repeat;
+      border:2px solid rgba(255,255,255,.2);
+      box-shadow:0 0 6px rgba(0,0,0,.3);
+    }
+    .brand .name{
+      font-weight:800;font-size:1.2rem;
+      background:linear-gradient(90deg,#f2e8dc,#d9b88e);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+    }
+    nav{display:flex;align-items:center;gap:18px;}
+    nav a{
+      color:#eee;font-weight:500;
+      padding:8px 12px;border-radius:8px;
+      transition:.3s;
+    }
+    nav a:hover{background:rgba(255,255,255,.08);color:#fff;}
+    .contact-btn{
+      background:linear-gradient(135deg,#8b5e34,#a47148);
+      color:#111;font-weight:700;
+      padding:8px 16px;border-radius:12px;
+      border:1px solid #a47148;transition:.3s;
+    }
+    .contact-btn:hover{filter:brightness(1.1);color:#fff;}
+    .menu-toggle{display:none;background:none;border:none;font-size:1.8rem;color:#f3eadf;cursor:pointer;}
+
+    @media(max-width:760px){
+      nav{display:none;}
+      .menu-toggle{display:block;}
+    }
+
+    /* ===== القائمة الجانبية للجوال ===== */
+    .mobile-menu{
+      position:fixed;top:0;right:0;
+      width:min(75%,300px);height:100%;
+      background:var(--dark-1);
+      box-shadow:-4px 0 20px rgba(0,0,0,0.4);
+      transform:translateX(100%);
+      transition:transform .4s ease;
+      display:flex;flex-direction:column;
+      padding:20px;z-index:2000;
+    }
+    .mobile-menu.active{transform:translateX(0);}
+    .mobile-menu a{
+      color:#f3eadf;text-decoration:none;
+      font-size:1.1rem;padding:12px;
+      border-radius:10px;margin-bottom:5px;
+      transition:.3s;
+    }
+    .mobile-menu a:hover{
+      background:rgba(255,255,255,.08);color:#fff;
+    }
+    .mobile-menu .contact-btn{
+      text-align:center;margin-top:10px;
+    }
+    .overlay{
+      position:fixed;inset:0;
+      background:rgba(0,0,0,0.55);
+      z-index:1500;display:none;
+      animation:fadeIn .4s ease;
+    }
+    .overlay.active{display:block;}
+    @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+    /* ===== نموذج الحجوزات ===== */
+    main{
+      max-width:600px;margin:40px auto;
+      background:linear-gradient(180deg,#2b2e32,#222427);
+      padding:28px;border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      border:1px solid rgba(255,255,255,.06);
+    }
+    h1{text-align:center;margin-bottom:20px;color:#f2e8dc;}
+    form{display:flex;flex-direction:column;gap:16px;}
+    label{font-weight:600;color:#f2e8dc;}
+    input,select,textarea{
+      padding:12px;border-radius:10px;
+      border:1px solid rgba(255,255,255,.1);
+      background:var(--dark-2);color:#fff;font-size:1rem;resize:none;
+    }
+    input:focus,select:focus,textarea:focus{
+      outline:2px solid var(--accent);
+      background:#2f3238;
+    }
+    button{
+      background:linear-gradient(135deg,#8b5e34,#a47148);
+      border:none;color:#111;font-weight:700;
+      padding:12px;border-radius:12px;cursor:pointer;
+      transition:.3s;
+    }
+    button:hover{filter:brightness(1.08);}
+    .success,.error{text-align:center;padding:10px;border-radius:8px;margin-top:8px;}
+    .success{background:#2ecc71;color:#111;}
+    .error{background:#e74c3c;color:#fff;}
+  </style>
+</head>
+<body>
+  <!-- ===== الشريط العلوي ===== -->
+  <header>
+    <div class="topbar">
+      <div class="brand">
+        <div class="logo"></div>
+        <div class="name">المنزل الراقي</div>
+      </div>
+      <button class="menu-toggle" aria-label="فتح القائمة">☰</button>
+      <nav>
+        <a href="index.html">الرئيسية</a>
+        <a href="#new">منتجاتنا</a>
+        <a href="#offers">العروض</a>
+        <!-- 🔶 زر الحجوزات واضح ومميز -->
+        <a href="booking.html" class="contact-btn">الحجوزات</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- القائمة الجانبية للجوال -->
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html">🏠 الرئيسية</a>
+    <a href="#new">🛋️ منتجاتنا</a>
+    <a href="#offers">💎 العروض</a>
+    <a href="booking.html" class="contact-btn">📅 الحجوزات</a>
+  </div>
+  <div class="overlay" id="overlay"></div>
+
+  <!-- ===== المحتوى الرئيسي ===== -->
+  <main>
+    <h1>نموذج الحجز</h1>
+    <form id="bookingForm" novalidate>
+      <label for="name">الاسم الكامل</label>
+      <input id="name" type="text" placeholder="اكتبي اسمك الكامل" required>
+
+      <label for="phone">رقم الجوال</label>
+      <input id="phone" type="tel" placeholder="05xxxxxxxx" pattern="^05\d{8}$" required>
+
+      <label for="service">نوع الخدمة المطلوبة</label>
+      <select id="service" required>
+        <option value="">اختاري نوع الخدمة</option>
+        <option>تصميم داخلي</option>
+        <option>تجهيز ديكور</option>
+        <option>تنظيم أثاث</option>
+        <option>زيارة ميدانية</option>
+      </select>
+
+      <label for="date">تاريخ الحجز</label>
+      <input id="date" type="date" required>
+
+      <label for="note">ملاحظات إضافية</label>
+      <textarea id="note" rows="4" placeholder="اكتبي أي تفاصيل تودين إضافتها..."></textarea>
+
+      <button type="submit">إرسال الطلب</button>
+      <div id="message"></div>
+    </form>
+  </main>
+
+  <script>
+    // ===== القائمة الجوال =====
+    const toggle=document.querySelector('.menu-toggle');
+    const menu=document.getElementById('mobileMenu');
+    const overlay=document.getElementById('overlay');
+    toggle.addEventListener('click',()=>{
+      menu.classList.add('active');overlay.classList.add('active');
+      document.body.style.overflow='hidden';
+    });
+    overlay.addEventListener('click',()=>{
+      menu.classList.remove('active');overlay.classList.remove('active');
+      document.body.style.overflow='auto';
+    });
+    menu.querySelectorAll('a').forEach(link=>{
+      link.addEventListener('click',()=>{
+        menu.classList.remove('active');overlay.classList.remove('active');
+        document.body.style.overflow='auto';
+      });
+    });
+
+    // ===== التحقق من نموذج الحجز =====
+    const form=document.getElementById('bookingForm');
+    const msg=document.getElementById('message');
+
+    form.addEventListener('submit',e=>{
+      e.preventDefault();
+      msg.innerHTML='';
+      const name=form.name.value.trim();
+      const phone=form.phone.value.trim();
+      const service=form.service.value;
+      const date=form.date.value;
+
+      if(!name||!phone||!service||!date){
+        msg.innerHTML='<div class="error">يرجى تعبئة جميع الحقول المطلوبة.</div>';
+        return;
+      }
+      if(!/^05\d{8}$/.test(phone)){
+        msg.innerHTML='<div class="error">رقم الجوال غير صحيح. مثال: 05xxxxxxxx</div>';
+        return;
+      }
+
+      const booking={name,phone,service,date,note:form.note.value.trim()};
+      localStorage.setItem('lastBooking',JSON.stringify(booking));
+      msg.innerHTML='<div class="success">تم إرسال طلب الحجز بنجاح ✅<br>سوف نتواصل معك قريبًا.</div>';
+      form.reset();
+    });
+  </script>
+</body>
+</html>
