@@ -191,7 +191,7 @@
       </div>`;
     grid.innerHTML=products.map(card).join('');
 
-    // 🛍️ حفظ حالة السلة
+   
     const key='raqi_cart';
     const state=JSON.parse(localStorage.getItem(key)||'{}');
     document.addEventListener('click',e=>{
