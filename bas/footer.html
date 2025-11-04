@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>المنزل الراقي — الشريط السفلي</title>
+  <style>
+    :root{
+      --beige:#f3eadf; --wood:#8b5e34; --dark-0:#0e0e0f; --dark-1:#191a1c; --dark-2:#24262a; --accent:#c9a574; --radius:14px; --shadow:0 8px 24px rgba(0,0,0,.18);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:transparent;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+    footer{
+      background:linear-gradient(180deg, var(--dark-1), var(--dark-0));
+      color:#eee; padding:28px clamp(16px,3vw,40px);
+      border-top:1px solid rgba(255,255,255,.06);
+    }
+    .grid{
+      display:grid; gap:20px;
+      grid-template-columns: repeat(4, minmax(0,1fr));
+    }
+    @media (max-width:920px){ .grid{ grid-template-columns: repeat(2,1fr);} }
+    @media (max-width:580px){ .grid{ grid-template-columns: 1fr;} }
+    .brand{display:flex; align-items:center; gap:10px}
+    .logo{ width:42px; height:42px; border-radius:50%; background: radial-gradient(circle at 30% 30%, #a47148, #8b5e34 60%, #5a3c23); box-shadow:var(--shadow) }
+    .name{ font-weight:800; background:linear-gradient(90deg,#f2e8dc,#d9b88e); -webkit-background-clip:text; background-clip:text; color:transparent }
+    .muted{ color:#cfc7bb }
+    a{ color:#f0e6d8; text-decoration:none }
+    a:hover{ text-decoration:underline }
+    .input{
+      width:100%; padding:12px 14px; border-radius:12px; background:#2e3136; color:#fff; border:1px solid rgba(255,255,255,.08);
+    }
+    .btn{
+      padding:12px 16px; border-radius:12px; border:1px solid #a47148; background:#8b5e34; color:#111; font-weight:700; cursor:pointer;
+    }
+    .bottom{
+      margin-top:24px; padding-top:16px; border-top:1px solid rgba(255,255,255,.08);
+      display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+    }
+    .badges{ display:flex; gap:8px; flex-wrap:wrap }
+    .badge{
+      padding:6px 10px; border-radius:999px; border:1px solid rgba(255,255,255,.12); background:#2f3338; color:#e8e2d8; font-size:.85rem
+    }
+  </style>
+</head>
+<body>
+  <footer role="contentinfo" aria-label="الشريط السفلي">
+    <div class="grid">
+      <section>
+        <div class="brand"><div class="logo"></div><div class="name">المنزل الراقي</div></div>
+        <p class="muted">موقع مختص ببيع المنتجات المنزلية المختارة بعناية، بجودة عالية وطابع خشبي أنيق.</p>
+      </section>
+      <section>
+        <h3>روابط سريعة</h3>
+        <nav>
+          <a href="/#new">جديدنا</a><br>
+          <a href="/#offers">عروض</a><br>
+          <a href="/#faq">الأسئلة الشائعة</a><br>
+          <a href="/#returns">الاستبدال والإرجاع</a>
+        </nav>
+      </section>
+      <section>
+        <h3>تواصلي معنا</h3>
+        <p class="muted">الرياض — المملكة العربية السعودية</p>
+        <p><a href="mailto:support@almanzil-raqi.sa">support@almanzil-raqi.sa</a><br>
+           <a href="tel:+966500000000">+966 50 000 0000</a></p>
+      </section>
+      <section>
+        <h3>انضمي لقائمتنا</h3>
+        <form id="newsletter" novalidate>
+          <input class="input" type="email" id="email" placeholder="بريدك الإلكتروني" required inputmode="email" autocomplete="email" />
+          <div style="height:10px"></div>
+          <button class="btn" type="submit">اشتركي الآن</button>
+          <p id="msg" class="muted" aria-live="polite"></p>
+        </form>
+      </section>
+    </div>
+
+    <div class="bottom">
+      <div class="badges">
+        <span class="badge">دفع آمن</span>
+        <span class="badge">تغليف بعناية</span>
+        <span class="badge">شحن سريع</span>
+      </div>
+      <small class="muted">© <span id="y"></span> المنزل الراقي — جميع الحقوق محفوظة</small>
+    </div>
+  </footer>
+
+  <script>
+    (function(){
+      // سنة ديناميكية
+      document.getElementById('y').textContent = new Date().getFullYear();
+
+      // معالجة نموذج النشرة مع تحقّق بسيط وإدارة أخطاء واضحة
+      const form = document.getElementById('newsletter');
+      const email = document.getElementById('email');
+      const msg = document.getElementById('msg');
+
+      function sanitize(s){ return s.replace(/[<>"'`]/g,''); }
+      function isValidEmail(v){ return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        const value = sanitize(email.value.trim());
+        if(!isValidEmail(value)){
+          msg.textContent = 'رجاءً أدخلي بريدًا إلكترونيًا صحيحًا.';
+          msg.style.color = '#e6b8b8';
+          return;
+        }
+        try{
+          // نموذج تجريبي محلي: خزّني الاشتراك في localStorage بدلاً من إرسال شبكة
+          const key='raqi_newsletter';
+          const list = JSON.parse(localStorage.getItem(key)||'[]');
+          if(!list.includes(value)) list.push(value);
+          localStorage.setItem(key, JSON.stringify(list));
+          msg.textContent = 'تم الاشتراك بنجاح! ✨';
+          msg.style.color = '#b7f0c0';
+          email.value='';
+        }catch(err){
+          console.error(err);
+          msg.textContent = 'تعذّر تنفيذ الطلب الآن. حاولي لاحقًا.';
+          msg.style.color = '#e6b8b8';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>

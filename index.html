@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>المنزل الراقي — متجر المنتجات المنزلية</title>
+
+  <!-- أمان أساسي -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; media-src 'self'; img-src 'self' data:; font-src 'self' data:; 
+        style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; upgrade-insecure-requests">
+
+  <style>
+    :root{
+      --beige:#f3eadf; --beige-2:#ece2d5;
+      --wood:#8b5e34; --wood-2:#a47148;
+      --dark-0:#0e0e0f; --dark-1:#191a1c; --dark-2:#24262a;
+      --accent:#c9a574; --radius:16px; --shadow:0 8px 24px rgba(0,0,0,.18);
+      --grad:linear-gradient(135deg,#0f1012 0%, #191a1c 40%, #2a2d33 100%);
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--dark-0);color:#eee;font-family:"Cairo",system-ui,-apple-system,Segoe UI,Roboto}
+    a{color:inherit;text-decoration:none}
+    .container{width:min(1200px,92vw);margin-inline:auto}
+
+    /* 🌟 البانر بالفيديو */
+    .hero{
+      position:relative;
+      width:100%;
+      height:80vh;
+      border-radius:0 0 var(--radius) var(--radius);
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      color:#fff;
+      text-align:center;
+    }
+    .hero video{
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      object-fit:cover;filter:brightness(0.55);
+    }
+    .hero::after{
+      content:"";position:absolute;inset:0;
+      background:linear-gradient(180deg,rgba(0,0,0,.4),rgba(0,0,0,.7));
+    }
+    .hero-content{
+      position:relative;z-index:2;max-width:800px;
+      padding:0 20px;animation:fadeUp 1.2s ease;
+    }
+    .hero h1{
+      font-size:clamp(1.8rem,3.5vw,3rem);
+      background:linear-gradient(90deg,#f2e8dc,#d9b88e);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      margin-bottom:12px;text-shadow:0 3px 8px rgba(0,0,0,0.5);
+    }
+    .hero p{
+      font-size:1.1rem;line-height:1.7;color:#f3eadf;margin-bottom:24px;
+    }
+    .cta{display:flex;justify-content:center;flex-wrap:wrap;gap:12px}
+    .btn{
+      padding:12px 20px;border-radius:12px;
+      border:1px solid #a47148;background:#8b5e34;color:#111;
+      font-weight:800;cursor:pointer;transition:.3s;
+    }
+    .btn:hover{background:#a47148;color:#fff;}
+    .btn.secondary{
+      background:rgba(255,255,255,0.1);color:#f3eadf;border-color:rgba(255,255,255,.25)
+    }
+    .btn.secondary:hover{background:rgba(255,255,255,0.2)}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+    /* 🛋️ المنتجات */
+    main.container{margin-top:18px;}
+    h2{text-align:center;color:#c9a574;font-size:1.6rem;margin-bottom:20px;}
+    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));}
+    .card{
+      background:linear-gradient(180deg,#2c2f34,#23262a);
+      border:1px solid rgba(255,255,255,.06);border-radius:var(--radius);
+      overflow:hidden;box-shadow:var(--shadow);
+      transition:transform .3s ease, box-shadow .3s ease;
+    }
+    .card:hover{transform:translateY(-5px);box-shadow:0 8px 20px rgba(0,0,0,.2);}
+    .card img{width:100%;aspect-ratio:4/3;object-fit:cover;}
+    .card .body{padding:12px 14px 16px}
+    .title{font-weight:700;color:#f1e7d8}
+    .price{color:#f0d9b5;font-weight:800}
+    .old{color:#c7b7a3;text-decoration:line-through;margin-inline-start:6px}
+    .add{
+      width:100%;margin-top:10px;padding:10px 12px;
+      border-radius:12px;background:#8b5e34;color:#111;
+      border:1px solid #a47148;cursor:pointer;font-weight:800;
+      transition:filter .3s ease;
+    }
+    .add:hover{filter:brightness(1.05)}
+    .badge{position:absolute;top:10px;left:10px;
+      background:#c9a574;color:#111;font-weight:800;
+      padding:6px 10px;border-radius:999px;}
+    .card-wrap{position:relative}
+    @media (max-width:700px){.hero{height:70vh;}.hero h1{font-size:2rem;}}
+  </style>
+</head>
+<body>
+
+  <!-- ✅ الهيدر والفوتر -->
+  <div id="header-slot"></div>
+
+  <!-- 🎥 بانر بالفيديو -->
+  <section class="hero" aria-label="مقدمة المنزل الراقي">
+    <video src="media/videoplayback.mp4" autoplay muted loop playsinline></video>
+    <div class="hero-content">
+      <h1>المنزل الراقي — حيث تبدأ أناقة بيتك</h1>
+      <p>اكتشفي تشكيلتنا المختارة من المنتجات المنزلية الفاخرة، بتصاميم خشبية راقية وألوان دافئة تعكس ذوقك الرفيع.</p>
+      <div class="cta">
+        <a href="#new" class="btn">تسوقي الآن</a>
+        <a href="#offers" class="btn secondary">تصفحي العروض</a>
+      </div>
+    </div>
+  </section>
+
+  <main class="container">
+    <h2>منتجات مختارة لهذا الأسبوع</h2>
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <div id="footer-slot"></div>
+
+  <script>
+    // ✅ تحميل القوالب ثم تفعيل الجافا داخل الهيدر بعد حقنه
+    const PARTIALS={header:'bas/header.html',footer:'bas/footer.html'};
+    async function inject(slot,path,afterLoad){
+      const el=document.getElementById(slot);
+      try{
+        const res=await fetch(path,{cache:'no-cache'});
+        if(!res.ok)throw new Error(res.status);
+        const html=await res.text();
+        el.innerHTML=html;
+        if(typeof afterLoad==='function')afterLoad(); // ✅ تنفيذ بعد التحميل
+      }catch{
+        el.innerHTML='<p style="padding:1rem;color:#d99">تعذر تحميل القالب '+path+'</p>';
+      }
+    }
+
+    // 🧩 تحميل الهيدر ثم تفعيله
+    inject('header-slot',PARTIALS.header,()=>{
+      const toggle=document.querySelector('.menu-toggle');
+      const menu=document.getElementById('mobileMenu');
+      const overlay=document.getElementById('overlay');
+
+      if(toggle && menu && overlay){
+        toggle.addEventListener('click',()=>{
+          menu.classList.add('active');
+          overlay.classList.add('active');
+          document.body.style.overflow='hidden';
+        });
+        overlay.addEventListener('click',()=>{
+          menu.classList.remove('active');
+          overlay.classList.remove('active');
+          document.body.style.overflow='auto';
+        });
+        menu.querySelectorAll('a').forEach(link=>{
+          link.addEventListener('click',()=>{
+            menu.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow='auto';
+          });
+        });
+      }
+    });
+
+    inject('footer-slot',PARTIALS.footer);
+
+    // 🛒 بيانات المنتجات
+    const products=[
+      {id:1,name:'طقم حافظات خشبي',price:129,old:169,img:'https://picsum.photos/seed/wood1/800/600',tag:'جديد'},
+      {id:2,name:'منظم أدراج بيج',price:89,img:'https://picsum.photos/seed/beige1/800/600'},
+      {id:3,name:'مصباح طاولة داكن',price:159,old:199,img:'https://picsum.photos/seed/dark1/800/600',tag:'خصم'},
+      {id:4,name:'طقم تقديم قهوة',price:210,old:249,img:'https://picsum.photos/seed/coffee1/800/600'}
+    ];
+
+    const grid=document.getElementById('grid');
+    const card=p=>`
+      <div class="card card-wrap">
+        ${p.tag?`<span class="badge">${p.tag}</span>`:''}
+        <img loading="lazy" src="${p.img}" alt="${p.name}">
+        <div class="body">
+          <div class="title">${p.name}</div>
+          <div><span class="price">${p.price} ر.س</span>${p.old?`<span class="old">${p.old} ر.س</span>`:''}</div>
+          <button class="add" data-id="${p.id}">أضيفي للسلة</button>
+        </div>
+      </div>`;
+    grid.innerHTML=products.map(card).join('');
+
+    // 🛍️ حفظ حالة السلة
+    const key='raqi_cart';
+    const state=JSON.parse(localStorage.getItem(key)||'{}');
+    document.addEventListener('click',e=>{
+      if(e.target.classList.contains('add')){
+        const btn=e.target;
+        const id=btn.dataset.id;
+        state[id]=(state[id]||0)+1;
+        localStorage.setItem(key,JSON.stringify(state));
+        btn.textContent='✓ تمت الإضافة';
+        setTimeout(()=>btn.textContent='أضيفي للسلة',1200);
+        const c=document.getElementById('cartCount');
+        if(c){
+          const total=Object.values(state).reduce((a,b)=>a+b,0);
+          c.textContent=String(total);
+          sessionStorage.setItem('cartCount',total);
+        }
+      }
+    });
+  </script>
+</body>
+</html>

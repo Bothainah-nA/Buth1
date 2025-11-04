@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
+  <title>اتصلي بنا — المنزل الراقي</title>
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline'; upgrade-insecure-requests">
+
+  <style>
+    :root{
+      --beige:#f3eadf; --wood:#8b5e34; --wood-2:#a47148;
+      --dark:#191a1c; --accent:#c9a574; --radius:14px;
+    }
+    body{
+      margin:0;
+      font-family:"Cairo",system-ui;
+      background:linear-gradient(135deg,#0f1012,#191a1c,#2a2d33);
+      color:#eee;
+      min-height:100vh;
+      display:flex;flex-direction:column;
+    }
+
+    .contact-container{
+      flex:1;
+      width:min(800px,92%);
+      margin:80px auto;
+      background:rgba(255,255,255,0.03);
+      border:1px solid rgba(255,255,255,0.1);
+      border-radius:var(--radius);
+      padding:30px;
+      box-shadow:0 8px 25px rgba(0,0,0,0.25);
+      text-align:center;
+      backdrop-filter:blur(6px);
+      animation:fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from{opacity:0;transform:translateY(20px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    h1{
+      background:linear-gradient(90deg,#f2e8dc,#d9b88e);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      margin-bottom:18px;
+      font-size:2rem;
+    }
+
+    p{
+      color:#ddd;
+      margin-bottom:35px;
+    }
+
+    form{
+      display:grid;
+      gap:16px;
+      text-align:right;
+    }
+
+    label{
+      font-weight:600;
+      color:#f3eadf;
+      font-size:.95rem;
+    }
+
+    input,textarea{
+      width:100%;
+      padding:12px;
+      border-radius:var(--radius);
+      border:1px solid rgba(255,255,255,0.1);
+      background:#24262a;
+      color:#f3eadf;
+      resize:none;
+      font-family:inherit;
+      font-size:1rem;
+    }
+    input:focus,textarea:focus{
+      border-color:var(--accent);
+      outline:none;
+      box-shadow:0 0 0 3px rgba(201,165,116,0.2);
+    }
+
+    button{
+      background:linear-gradient(135deg,#8b5e34,#a47148);
+      color:#111;
+      font-weight:800;
+      padding:12px 16px;
+      border-radius:var(--radius);
+      border:none;
+      cursor:pointer;
+      transition:.3s;
+    }
+    button:hover{filter:brightness(1.1);color:#fff;}
+
+    .info{
+      margin-top:40px;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:20px;
+      font-size:0.95rem;
+    }
+
+    .info div{
+      background:rgba(255,255,255,0.05);
+      padding:12px 18px;
+      border-radius:12px;
+      border:1px solid rgba(255,255,255,0.1);
+    }
+
+    footer{
+      text-align:center;
+      padding:20px;
+      font-size:.9rem;
+      color:#bbb;
+      border-top:1px solid rgba(255,255,255,.05);
+      background:#0f1012;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ الشريط العلوي من القالب -->
+  <div id="header-slot"></div>
+
+  <!-- 💌 صفحة الاتصال -->
+  <div class="contact-container">
+    <h1>اتصلي بنا</h1>
+    <p>يسعدنا تواصلك معنا، أرسلي لنا ملاحظاتك أو استفسارك وسنعاود الرد في أقرب وقت.</p>
+
+    <form onsubmit="sendMessage(event)">
+      <div>
+        <label for="name">الاسم الكامل</label>
+        <input id="name" name="name" type="text" placeholder="اكتبي اسمك" required>
+      </div>
+      <div>
+        <label for="email">البريد الإلكتروني</label>
+        <input id="email" name="email" type="email" placeholder="example@email.com" required>
+      </div>
+      <div>
+        <label for="message">رسالتك</label>
+        <textarea id="message" name="message" rows="5" placeholder="اكتبي ملاحظتك أو استفسارك هنا..." required></textarea>
+      </div>
+      <button type="submit">إرسال الرسالة</button>
+    </form>
+
+    <div class="info">
+      <div>📞 هاتف: 0500000000</div>
+      <div>📧 البريد: support@raqi-home.sa</div>
+      <div>📍 العنوان: الرياض، المملكة العربية السعودية</div>
+    </div>
+  </div>
+
+  <!-- ✅ الفوتر من القالب -->
+  <div id="footer-slot"></div>
+
+  <script>
+    // 🧩 استدعاء القوالب من مجلد bas
+    const PARTIALS = {
+      header: 'bas/header.html',
+      footer: 'bas/footer.html'
+    };
+
+    async function inject(slot, path){
+      const target = document.getElementById(slot);
+      try {
+        const res = await fetch(path, {cache: 'no-cache'});
+        if(!res.ok) throw new Error(res.status);
+        const html = await res.text();
+        target.innerHTML = html;
+      } catch (err) {
+        target.innerHTML = `<p style="padding:1rem;color:#e99">تعذر تحميل القالب: ${path}</p>`;
+        console.error('خطأ تحميل القالب', err);
+      }
+    }
+
+    inject('header-slot', PARTIALS.header);
+    inject('footer-slot', PARTIALS.footer);
+
+    // 📨 إرسال الرسالة
+    function sendMessage(e){
+      e.preventDefault();
+      const name=document.getElementById('name').value.trim();
+      const email=document.getElementById('email').value.trim();
+      const msg=document.getElementById('message').value.trim();
+      if(!name||!email||!msg){
+        alert("الرجاء تعبئة جميع الحقول.");
+        return;
+      }
+      alert(`شكرًا لك ${name}! تم إرسال رسالتك بنجاح ✨`);
+      e.target.reset();
+    }
+  </script>
+</body>
+</html>
